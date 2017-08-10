@@ -1,6 +1,9 @@
 import math
 import pandas as panda
 import quandl
+import numpy
+from sklearn import preprocessing, cross_validation, svm
+from sklearn.linear_model import LinearRegression
 
 ticker = "WIKI/TSLA"
 
@@ -27,6 +30,19 @@ dataFrame2.fillna(-99999, inplace=True)
 dataFrameLength = len(dataFrame)
 forecastLength = int(math.ceil(0.01*dataFrameLength))
 dataFrame["label"] = dataFrame[forecastColumn].shift(-forecastLength)
+
+# Features
+X = numpy.array(dataFrame.drop(["label"], 1))
+
+# Labels
+y = numpy.array(dataFrame["label"])
+
+X = preprocessing.scale(X)
+X = X[:-forecastLength + 1]
+dataFrame.dropna(inplace=True)
+y= numpy.array(dataFrame["label"])
+
+print(len(X), len(y))
 
 print(forecastLength, dataFrameLength)
 print(dataFrame.tail())
