@@ -1,7 +1,10 @@
+import math
 import pandas as panda
 import quandl
 
 ticker = "WIKI/TSLA"
+
+forecastColumn = "Adj. Close"
 
 dataFrame = quandl.get(ticker)
 dataFrame = dataFrame[["Adj. Open", "Adj. High", "Adj. Low", "Adj. Close", "Adj. Volume"]]
@@ -16,7 +19,17 @@ dataFrame2 = dataFrame[["Adj. Close", "differencePercent", "dayPercentChange", "
 # Dataframe2 stores Adjusted Volume in Millions
 dataFrame2["Adj. Volume"] = dataFrame["Adj. Volume"] / 1000000
 
-print(dataFrame2.tail())
-print(dataFrame2.head())
+# Fill N/A data with extreme values to create outliers
+dataFrame.fillna(-99999, inplace=True)
+dataFrame2.fillna(-99999, inplace=True)
+
+# Gets length of 1% of dataFrame
+dataFrameLength = len(dataFrame)
+forecastLength = int(math.ceil(0.01*dataFrameLength))
+dataFrame["label"] = dataFrame[forecastColumn].shift(-forecastLength)
+
+print(forecastLength, dataFrameLength)
+print(dataFrame.tail())
+print(dataFrame.head())
 #print(dataFrame["differencePercent"].tail())
 #print(dataFrame["dayPercentChange"].tail())
