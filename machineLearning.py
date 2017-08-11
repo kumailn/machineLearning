@@ -7,8 +7,10 @@ from sklearn.linear_model import LinearRegression
 import matplotlib.pyplot as plt
 from matplotlib import style
 
+
+
 style.use("ggplot")
-ticker = "WIKI/TSLA"
+ticker = "WIKI/AAPL"
 
 forecastColumn = "Adj. Close"
 
@@ -51,8 +53,8 @@ y= numpy.array(dataFrame["label"])
 X_train, X_test, y_train, y_test = cross_validation.train_test_split(X, y, test_size=0.2)
 
 # Set machine learning algorithm
-classifier = LinearRegression(n_jobs=-1)
-#classifier = svm.SVR()
+#classifier = LinearRegression(n_jobs=-1)
+classifier = svm.SVR()
 
 classifier.fit(X_train, y_train)
 accuracy = classifier.score(X_test, y_test)
