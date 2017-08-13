@@ -56,6 +56,7 @@ X_train, X_test, y_train, y_test = cross_validation.train_test_split(X, y, test_
 #classifier = LinearRegression(n_jobs=-1)
 classifier = svm.SVR()
 
+
 classifier.fit(X_train, y_train)
 accuracy = classifier.score(X_test, y_test)
 
@@ -86,5 +87,3 @@ plt.legend(loc=4)
 plt.xlabel("Date")
 plt.ylabel("$")
 plt.show()
-#print(dataFrame["differencePercent"].tail())
-#print(dataFrame["dayPercentChange"].tail())
