@@ -1,4 +1,5 @@
-
+import numpy
+import matplotlib.pyplot as plt
 def slope(l):
     # Takes in list of x, y pairs, finds exact slope of best line of scatter plot
     xs, ys = [], []
@@ -33,6 +34,31 @@ def sql(l):
     for i in l:
         ll += [i ** 2]
     return ll
+
+def xs(l):
+    xs2, ys = [], []
+    for i in range(len(l)):
+        xs2 += [l[i][0]]
+    return xs2
+def ys(l):
+    xs, ys2 = [], []
+    for i in range(len(l)):
+        ys2 += [l[i][1]]
+    return ys2
+
+def lineOfRegression(l):
+    ll = []
+    for i in xs(l):
+        ll += [(slope(l) * i + intercept(l))]
+    return ll
+
+coordinates = [[2,7],[5,13], [20, 43]]
+
 print(slope([[2,7],[5,13], [20, 43]]))
 print(intercept([[2,7],[5,13], [20, 43]]))
+print(xs([[2,7],[5,13], [20, 43]]))
 print(mean([1,2,3]))
+print(lineOfRegression([[2,7],[5,13], [20, 43]]))
+plt.scatter (xs([[2,7],[5,13], [20, 43]]), ys(([[2,7],[5,13], [20, 43]])))
+print(lineOfRegression(coordinates))
+plt.show()
