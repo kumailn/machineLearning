@@ -2,6 +2,7 @@ import math, datetime
 import pandas as panda
 import quandl
 import numpy
+import re
 from sklearn import preprocessing, cross_validation, svm
 from sklearn.linear_model import LinearRegression
 import matplotlib.pyplot as plt
@@ -10,7 +11,7 @@ from matplotlib import style
 
 
 style.use("ggplot")
-ticker = "WIKI/AAPL"
+ticker = "WIKI/GOOGL"
 
 forecastColumn = "Adj. Close"
 
@@ -39,8 +40,9 @@ dataFrame["label"] = dataFrame[forecastColumn].shift(-forecastLength)
 # Features
 X = numpy.array(dataFrame.drop(["label"], 1))
 X = preprocessing.scale(X)
-X = X[:-forecastLength]
 X_now = X[-forecastLength:]
+X = X[:-forecastLength]
+
 
 # Labels
 dataFrame.dropna(inplace=True)
@@ -53,8 +55,8 @@ y= numpy.array(dataFrame["label"])
 X_train, X_test, y_train, y_test = cross_validation.train_test_split(X, y, test_size=0.2)
 
 # Set machine learning algorithm
-#classifier = LinearRegression(n_jobs=-1)
-classifier = svm.SVR()
+classifier = LinearRegression(n_jobs=-1)
+#classifier = svm.SVR()
 
 
 classifier.fit(X_train, y_train)
@@ -86,4 +88,5 @@ dataFrame["Forecast"].plot()
 plt.legend(loc=4)
 plt.xlabel("Date")
 plt.ylabel("$")
+plt.title(re.sub("WIKI/", "", ticker))
 plt.show()

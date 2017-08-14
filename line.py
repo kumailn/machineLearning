@@ -1,5 +1,10 @@
+import random
+
 import numpy
 import matplotlib.pyplot as plt
+from matplotlib import style
+
+style.use("ggplot")
 def slope(l):
     # Takes in list of x, y pairs, finds exact slope of best line of scatter plot
     xs, ys = [], []
@@ -71,15 +76,51 @@ def coefficient_of_determination(l):
     y_mean_squared_error = squared_error(ys(l), y_mean_line)
     return(1 - (regression_squared_error/y_mean_squared_error))
 
+def to_pairs(x, y):
+    # Given x and y values, creates x, y pairs
+    l = []
+    for i in range(len(x)):
+        l += [[x[i], y[i]]]
+    return l
+
+def dataset(num, variance, step=2, correlation=False):
+    # Creates a "random" dataset of n values, variance between values, step, and + or - correlation
+    value = 1
+    ys = []
+    for i in range(num):
+        y = value + random.randrange(-variance, variance)
+        ys += [y]
+        if correlation and correlation == "pos":
+            value += step
+        elif correlation and correlation == "neg":
+            value -= step
+        elif correlation and correlation == "chaos":
+            # Creates a "stock" like chart
+            v = random.randint(0,1)
+            if v == 0:
+                value += step*random.randint(-variance, variance)
+            else:
+                value -= step*random.randint(-variance, variance)
+    xs = [i for i in range(len(ys))]
+    return numpy.array(xs, dtype=numpy.float64), numpy.array(ys, dtype=numpy.float64)
+
+
 coordinates = [[2,7],[5,13], [20, 43], [-2, 213]]
 
-print(slope(coordinates))
-print(intercept(coordinates))
-print(xs(coordinates))
+# print(slope(coordinates))
+# print(intercept(coordinates))
+# print(xs(coordinates))
+# # print(line_of_regression(coordinates))
+# plt.scatter (xs(coordinates), ys((coordinates)))
+# plt.plot(xs(coordinates), line_of_regression(coordinates))
 print(line_of_regression(coordinates))
-plt.scatter (xs(coordinates), ys((coordinates)))
-plt.plot(xs(coordinates), line_of_regression(coordinates))
-print(line_of_regression(coordinates))
+print(to_pairs([1,2,3],[4,5,6]))
 
-print("The coefficient of determination is %" + (str(coefficient_of_determination(coordinates) * 100)))
+x1, y1 = dataset(100, 50, 23, correlation="chaos")
+plt.scatter(x1, y1)
+plt.plot(line_of_regression(to_pairs(x1, y1)))
+
+
+print(numpy.ndarray.tolist(x1), numpy.ndarray.tolist(y1))
+print("The coefficient of determination is %" + (str(coefficient_of_determination(to_pairs(x1, y1)) * 100)))
 plt.show()
