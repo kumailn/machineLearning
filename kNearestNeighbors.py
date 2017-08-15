@@ -9,8 +9,8 @@ def n():
     dataFrame.drop(["id"], 1, inplace=True)
     print(dataFrame.head())
 
-    y = numpy.array(dataFrame["class"])
-    X = numpy.array(dataFrame.drop(["class"], 1))
+    y = numpy.array(dataFrame["class"]).reshape
+    X = numpy.array(dataFrame.drop(["class"], 1)).reshape
 
     X_train, X_test, Y_train, Y_test = cross_validation.train_test_split(X, y, test_size=0.2)
 
