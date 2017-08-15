@@ -1,4 +1,4 @@
-##
+##v15
 import numpy
 from sklearn import preprocessing, cross_validation, neighbors
 import  pandas
@@ -57,10 +57,10 @@ def car():
     accuracy = classifier.score(X_test, Y_test)
     print(accuracy)
 
-    example_test = numpy.array([2, 1, 4, 4, 2, 3])
+    example_test = numpy.array([4, 3, 4, 4, 2, 3])
 
     pred = classifier.predict(example_test)
     print(pred)
 
 
-car()
+n()

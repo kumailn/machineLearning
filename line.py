@@ -116,7 +116,7 @@ coordinates = [[2,7],[5,13], [20, 43], [-2, 213]]
 print(line_of_regression(coordinates))
 print(to_pairs([1,2,3],[4,5,6]))
 
-x1, y1 = dataset(100, 50, 23, correlation="chaos")
+x1, y1 = dataset(645, 235, 23, correlation="chaos")
 plt.scatter(x1, y1)
 plt.plot(line_of_regression(to_pairs(x1, y1)))
 
