@@ -1,4 +1,4 @@
-#svm v20
+#svm v21
 import numpy
 from sklearn import preprocessing, cross_validation, neighbors, svm
 import  pandas
